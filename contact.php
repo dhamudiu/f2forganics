@@ -1,0 +1,136 @@
+<?php
+/*
+Template Name: Contact Page
+*/
+get_header(); ?>
+
+<section class="how-overlay2 bg-img1" style="background-image: url(<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/bg-07.jpg'; ?>);">
+	<div class="container">
+		<div class="txt-center p-t-160 p-b-165">
+			<h2 class="txt-l-101 cl0 txt-center p-b-14 respon1">Contact</h2>
+
+			<span class="txt-m-201 cl0 flex-c-m flex-w">
+				<a href="<?php echo esc_attr( get_home_url() ); ?>" class="txt-m-201 cl0 hov-cl10 trans-04 m-r-6">Home</a>
+				<span>/ Contact</span>
+			</span>
+		</div>
+	</div>
+</section>
+
+<section class="bg0 p-t-145 p-b-100">
+	<div class="container">
+		<div class="size-a-1 flex-col-c-m p-b-70">
+			<div class="txt-center txt-m-201 cl10 how-pos1-parent m-b-14">
+				Get In Touch
+				<div class="how-pos1">
+					<img src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/icons/symbol-02.png'; ?>" alt="IMG">
+				</div>
+			</div>
+
+			<h3 class="txt-center txt-l-101 cl3 respon1">Leave us a message!</h3>
+			<div class="m-w-1000">
+				<p>We'd love to hear from you! Whether you have a question about our products, need assistance with an
+					order, or simply want to know more about organic living, our team is here to help.</p>
+			</div>
+		</div>
+
+		<form id="contact-form" class="validate-form" method="post" action="" name="contact">
+			<div class="row">
+				<div class="col-sm-6 p-b-30">
+					<div class="validate-input" data-validate="Name is required">
+						<input class="txt-s-101 cl3 plh1 size-a-46 bo-all-1 bocl15 focus1 p-rl-20" type="text" name="name"
+							placeholder="Your Full Name *">
+					</div>
+				</div>
+
+				<div class="col-sm-6 p-b-30">
+					<div class="validate-input" data-validate="Valid email is: ex@abc.xyz">
+						<input class="txt-s-101 cl3 plh1 size-a-46 bo-all-1 bocl15 focus1 p-rl-20" type="text" name="email"
+							placeholder="Your Email *">
+					</div>
+				</div>
+
+				<div class="col-sm-6 p-b-30">
+					<div>
+						<input class="txt-s-101 cl3 plh1 size-a-46 bo-all-1 bocl15 focus1 p-rl-20" type="text" name="address"
+							placeholder="Your Address">
+					</div>
+				</div>
+
+				<div class="col-sm-6 p-b-30">
+					<div class="validate-input" data-validate="Phone is required">
+						<input class="txt-s-101 cl3 plh1 size-a-46 bo-all-1 bocl15 focus1 p-rl-20" type="text" name="phone"
+							placeholder="Your Phone *">
+					</div>
+				</div>
+
+				<div class="col-12 p-b-30">
+					<div class="validate-input" data-validate="Message is required">
+						<textarea class="txt-s-101 cl3 plh1 size-a-47 bo-all-1 bocl15 focus1 p-rl-20 p-tb-10" name="msg"
+							placeholder="Your Message"></textarea>
+					</div>
+				</div>
+			</div>
+
+			<div class="flex-c p-t-10">
+				<button class="flex-c-m txt-s-103 cl0 bg10 size-a-2 hov-btn2 trans-04">Send us now</button>
+			</div>
+		</form>
+	</div>
+</section>
+
+<section class="container p-t-90 p-b-45">
+	<div class="row">
+		<div class="col-sm-6 col-lg-3 p-b-50">
+			<div class="flex-col-c-m p-rl-25">
+				<div class="wrap-pic-max-s p-b-25">
+					<img src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/icons/icon-address.png'; ?>" alt="IMG">
+				</div>
+
+				<h5 class="txt-m-114 cl3 txt-center p-b-9">Farm to Family Organic Mall</h5>
+
+				<span class="txt-s-101 cl6 txt-center">
+					Shyamdhara - 2 Complex,
+					Shiv Sangam Society Main Road,
+					B/H Jalaram - 2, University Road,
+					Rajkot - 360 007
+				</span>
+			</div>
+		</div>
+
+		<div class="col-sm-6 col-lg-3 p-b-50">
+			<div class="flex-col-c-m p-rl-25">
+				<div class="wrap-pic-max-s p-b-25"><img src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/icons/icon-phone-03.png'; ?>" alt="IMG"></div>
+
+				<h5 class="txt-m-114 cl3 txt-center p-b-9">Phone</h5>
+
+				<span class="txt-s-101 cl6 txt-center">+91 70957 30957</span>
+			</div>
+		</div>
+
+		<div class="col-sm-6 col-lg-3 p-b-50">
+			<div class="flex-col-c-m p-rl-25">
+				<div class="wrap-pic-max-s p-b-25 p-t-5">
+					<img src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/icons/icon-mail-03.png'; ?>" alt="IMG">
+				</div>
+				<h5 class="txt-m-114 cl3 txt-center p-b-9">
+					Emaill contact
+				</h5>
+				<span class="txt-s-101 cl6 txt-center">
+					<a href="mailto:farmtofamilyrajkot@gmail.com">farmtofamilyrajkot@gmail.com</a>
+					</span>
+				</div>
+			</div>
+
+			<div class=" col-sm-6 col-lg-3 p-b-50">
+						<div class="flex-col-c-m p-rl-25">
+							<div class="wrap-pic-max-s p-b-25"><img src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/icons/icon-home.png'; ?>" alt="IMG"></div>
+							<h5 class="txt-m-114 cl3 txt-center p-b-9">Store Hours:</h5>
+							<span class="txt-s-101 cl6 txt-center">Monday to Sunday:</span>
+							<span class="txt-s-101 cl6 txt-center">09:00 A.M. to 09:00 P.M.</span>
+						</div>
+			</div>
+		</div>
+</section>
+
+<?php get_footer(); ?>
