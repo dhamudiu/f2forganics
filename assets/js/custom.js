@@ -23,7 +23,7 @@ jQuery( document ).ready( function ( $ ) {
 	} );
 } );
 
-jQuery( function ( $ ) {
+jQuery( document ).ready( function ( $ ) {
 	function updateStickyCart () {
 		$.get(
 			wc_add_to_cart_params.wc_ajax_url.replace( '%%endpoint%%', 'get_refreshed_fragments' ),
@@ -148,9 +148,7 @@ jQuery( function ( $ ) {
 		updateCart( productId, qty, variationId, variationData );
 	} );
 
-	// On variation change: refresh controls
-	$( document ).on( 'change', '.variation-select', function () {
-		const $select = $( this );
+	function handleVariationChange ( $select ) {
 		const $parent = $select.closest( '.custom-cart-controls' );
 		const selectedQty = parseInt( $select.find( 'option:selected' ).data( 'variation-qty' ) ) || 0;
 		const $customProduct = $select.closest( '.custom-product' );
@@ -166,10 +164,26 @@ jQuery( function ( $ ) {
 
 		$parent.find( '.variation-actions' ).html( controlsHtml );
 		$customProduct.find( '.price' ).html( `${ price }` );
+	}
+
+	// On variation change: refresh controls
+	$( document ).on( 'change', '.variation-select', function () {
+		handleVariationChange( $( this ) );
 	} );
 
-	$( '.variation-select' ).trigger( 'change' );
+	let attempts = 0;
+	const maxAttempts = 10;
 
+	( function waitForVariationSelect () {
+		if ( typeof handleVariationChange === 'function' && $( '.variation-select' ).length > 0 ) {
+			$( '.variation-select' ).each( function () {
+				handleVariationChange( $( this ) );
+			} );
+		} else if ( attempts < maxAttempts ) {
+			attempts++;
+			setTimeout( waitForVariationSelect, 1000 );
+		}
+	} )();
 
 	updateStickyCart();
 } );
@@ -189,5 +203,12 @@ jQuery( document ).ready( function ( $ ) {
 		} else {
 			$stickyCart.removeClass( 'hide-sticky-cart' );
 		}
+	} );
+} );
+
+jQuery( document ).ready( function ( $ ) {
+	$( document ).on( 'click', '.wp-block-button.continue-shopping a', function ( e ) {
+		e.preventDefault();
+		window.location.href = my_ajax_data.home_url + '/shop/';
 	} );
 } );
