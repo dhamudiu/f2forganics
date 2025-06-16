@@ -77,6 +77,10 @@
 						<div class="wrap-icon-header flex-w flex-r-m h-full wrap-menu-click p-t-8">
 							<ul class="main-menu">
 								<li>
+									<a href="<?php echo esc_attr( get_home_url( null, 'contact' ) ); ?>">Contact</a>
+								</li>
+
+								<li>
 									<a href="<?php echo esc_attr( wc_get_cart_url() ); ?>">Cart</a>
 								</li>
 							</ul>
@@ -148,6 +152,10 @@
 			?>
 
 			<ul class="main-menu-m p-0">
+				<li>
+					<a href="<?php echo esc_attr( get_home_url( null, 'contact' ) ); ?>">Contact</a>
+				</li>
+
 				<li>
 					<a href="<?php echo esc_attr( wc_get_cart_url() ); ?>">Cart</a>
 				</li>
