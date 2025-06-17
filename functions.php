@@ -1,4 +1,10 @@
 <?php
+
+//  Defines the base path for theme assets.
+if ( ! defined( 'F2FORGANICS_ASSETS' ) ) {
+	define( 'F2FORGANICS_ASSETS', get_template_directory_uri() . '/assets' );
+}
+
 // Theme support
 function f2forganics_setup() {
 	add_theme_support( 'title-tag' );
@@ -13,18 +19,99 @@ add_action( 'after_setup_theme', 'f2forganics_setup' );
 // Enqueue styles & scripts
 function f2forganics_scripts() {
 	wp_enqueue_style( 'f2forganics-style', get_stylesheet_uri() );
+
+	wp_enqueue_script( 'custom-js', get_template_directory_uri() . '/assets/js/custom.js', array( 'jquery' ), null, true );
+
+	wp_localize_script(
+		'custom-js',
+		'my_ajax_data',
+		array(
+			'ajax_url' => admin_url( 'admin-ajax.php' ),
+			'home_url' => home_url(),
+		)
+	);
 }
 add_action( 'wp_enqueue_scripts', 'f2forganics_scripts' );
 
-function f2forganics_add_woocommerce_support() {
-	add_theme_support( 'woocommerce' );
-}
-add_action( 'after_setup_theme', 'f2forganics_add_woocommerce_support' );
+/**
+ * Hooks the f2f_enqueue_footer_scripts function to the WordPress wp_enqueue_scripts action.
+ * This ensures that additional JavaScript libraries and custom scripts are loaded in the footer.
+ */
+function f2f_enqueue_footer_scripts() {
+	$assets = F2FORGANICS_ASSETS;
 
-if ( ! defined( 'F2FORGANICS_ASSETS' ) ) {
-	define( 'F2FORGANICS_ASSETS', get_template_directory_uri() . '/assets' );
-}
+	// Core jQuery (optional if already loaded)
+	wp_enqueue_script( 'jquery-core', $assets . '/vendor/jquery/jquery-3.2.1.min.js', array(), null, true );
 
+	// Example: Select2 fix
+	wp_enqueue_script( 'select2', $assets . '/vendor/select2/select2.min.js', array( 'jquery' ), null, true );
+
+	// Revolution JS
+	wp_enqueue_script( 'revolution-tools', $assets . '/vendor/revolution/js/jquery.themepunch.tools.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'revolution-core', $assets . '/vendor/revolution/js/jquery.themepunch.revolution.min.js', array( 'jquery' ), null, true );
+
+	// ... Add all others similarly
+	// wp_enqueue_script( 'email-decode', $assets . 'm/../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'jquery-321', $assets . '/vendor/jquery/jquery-3.2.1.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'animsition', $assets . '/vendor/animsition/js/animsition.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'popper', $assets . '/vendor/bootstrap/js/popper.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'bootstrap', $assets . '/vendor/bootstrap/js/bootstrap.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'themepunch-tools', $assets . '/vendor/revolution/js/jquery.themepunch.tools.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'jquery-themepunch-revolution', $assets . '/vendor/revolution/js/jquery.themepunch.revolution.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'revolution-extension-video', $assets . '/vendor/revolution/js/extensions/revolution.extension.video.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'revolution-extension-carousel', $assets . '/vendor/revolution/js/extensions/revolution.extension.carousel.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'revolution-extension-slideanims', $assets . '/vendor/revolution/js/extensions/revolution.extension.slideanims.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'revolution-extension-actions', $assets . '/vendor/revolution/js/extensions/revolution.extension.actions.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'revolution-extension-layeranimation', $assets . '/vendor/revolution/js/extensions/revolution.extension.layeranimation.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'revolution-extension-kenburn', $assets . '/vendor/revolution/js/extensions/revolution.extension.kenburn.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'revolution-extension-navigation', $assets . '/vendor/revolution/js/extensions/revolution.extension.navigation.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'revolution-extension-migration', $assets . '/vendor/revolution/js/extensions/revolution.extension.migration.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'revolution-extension-parallax', $assets . '/vendor/revolution/js/extensions/revolution.extension.parallax.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'revo-custom', $assets . '/js/revo-custom.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'daterangepicker-moment', $assets . '/vendor/daterangepicker/moment.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'daterangepicker', $assets . '/vendor/daterangepicker/daterangepicker.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'slick', $assets . '/vendor/slick/slick.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'slick-custom', $assets . '/js/slick-custom.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'parallax100', $assets . '/vendor/parallax100/parallax100.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'lightbox', $assets . '/vendor/lightbox2/js/lightbox.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'jquery.magnific-popup', $assets . '/vendor/MagnificPopup/jquery.magnific-popup.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'isotope-pkgd', $assets . '/vendor/isotope/isotope.pkgd.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'sweetalert', $assets . '/vendor/sweetalert/sweetalert.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'countdowntime-moment', $assets . '/vendor/countdowntime/moment.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'moment-timezone', $assets . '/vendor/countdowntime/moment-timezone.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'moment-timezone-with-data', $assets . '/vendor/countdowntime/moment-timezone-with-data.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'countdown', $assets . '/vendor/countdowntime/jquery.countdown.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'countdowntime', $assets . '/vendor/countdowntime/countdowntime.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'perfect-scrollbar', $assets . '/vendor/perfect-scrollbar/perfect-scrollbar.min.js', array( 'jquery' ), null, true );
+
+	// Your custom JS
+	wp_enqueue_script( 'main-js', $assets . '/js/main.js', array( 'jquery' ), null, true );
+}
+add_action( 'wp_enqueue_scripts', 'f2f_enqueue_footer_scripts' );
+
+/**
+ * Enqueues WooCommerce Select2 script and style if WooCommerce is active.
+ *
+ * Adds Select2 JavaScript and CSS to the page when WooCommerce is installed,
+ * which provides enhanced dropdown and select form field functionality.
+ *
+ * @hook wp_enqueue_scripts
+ * @priority 25
+ */
+function f2f_enqueue_wc_select2() {
+	if ( class_exists( 'WooCommerce' ) ) {
+		wp_enqueue_script( 'select2', WC()->plugin_url() . '/assets/js/select2/select2.full.min.js', array( 'jquery' ), '4.0.13', true );
+		wp_enqueue_style( 'select2', WC()->plugin_url() . '/assets/css/select2.css' );
+	}
+}
+add_action( 'wp_enqueue_scripts', 'f2f_enqueue_wc_select2', 25 );
+
+/**
+ * Custom WordPress navigation menu walker for customizing menu rendering.
+ *
+ * Extends the default Walker_Nav_Menu class to modify menu item and submenu output.
+ * Adds custom class handling and provides custom rendering for menu items and submenus.
+ */
 class My_Custom_Walker_Nav_Menu extends Walker_Nav_Menu {
 	// Open submenu <ul>
 	public function start_lvl( &$output, $depth = 0, $args = null ) {
@@ -52,6 +139,13 @@ class My_Custom_Walker_Nav_Menu extends Walker_Nav_Menu {
 	}
 }
 
+/**
+ * Custom WordPress navigation menu walker for mobile menus.
+ *
+ * Extends the default Walker_Nav_Menu class to modify menu rendering for mobile layouts.
+ * Adds custom submenu classes, mobile-specific arrow indicators, and handles menu item rendering.
+ * Specifically designed to enhance mobile navigation menu presentation.
+ */
 class My_Custom_Walker_Nav_Menu2 extends Walker_Nav_Menu {
 	// Open submenu <ul>
 	public function start_lvl( &$output, $depth = 0, $args = null ) {
@@ -84,37 +178,49 @@ class My_Custom_Walker_Nav_Menu2 extends Walker_Nav_Menu {
 	}
 }
 
+/**
+ * Adds custom CSS classes to the body element.
+ *
+ * Allows dynamic addition of custom classes to the body tag, such as 'animation'
+ * and 'home-page' based on specific conditions like being on the homepage.
+ *
+ * @param array $classes Existing body classes passed by WordPress.
+ * @return array Modified array of body classes including custom classes.
+ */
+function add_custom_body_classes( $classes ) {
+	global $ishome;
 
-// Add specific CSS class by filter.
-add_filter(
-	'body_class',
-	function ($classes) {
-		global $ishome;
+	$custom_classes = array( 'animation' );
 
-		$custom_classes = array( 'animation' );
-
-		if ( isset( $ishome ) && true === $ishome ) {
-			$custom_classes[] = 'home-page';
-		}
-
-		return array_merge( $classes, $custom_classes );
+	if ( isset( $ishome ) && true === $ishome ) {
+		$custom_classes[] = 'home-page';
 	}
-);
+
+	return array_merge( $classes, $custom_classes );
+}
+add_filter( 'body_class', 'add_custom_body_classes' );
 
 // Open wrapper
 function mytheme_wc_wrapper_start() {
-	echo '<div class="container"><main id="main" class="site-main">';
+	echo '<div class="container">';
 }
 add_action( 'woocommerce_before_main_content', 'mytheme_wc_wrapper_start', 10 );
 
 // Close wrapper
 function mytheme_wc_wrapper_end() {
-	echo '</main></div>';
+	echo '</div>';
 }
 add_action( 'woocommerce_after_main_content', 'mytheme_wc_wrapper_end', 10 );
 
-
-// Add checkbox field to product category add/edit forms
+/**
+ * Adds a checkbox to the product category add/edit page to control homepage display.
+ *
+ * This function adds a custom checkbox field to the product category form that allows
+ * administrators to choose whether a specific category should be displayed on the homepage.
+ *
+ * @param WP_Term $term The current product category term being edited or added.
+ * @since 1.0.0
+ */
 function add_homepage_category_checkbox( $term ) {
 	$checked = get_term_meta( $term->term_id, 'show_on_homepage', true );
 	?>
@@ -130,7 +236,15 @@ function add_homepage_category_checkbox( $term ) {
 add_action( 'product_cat_edit_form_fields', 'add_homepage_category_checkbox', 10, 1 );
 add_action( 'product_cat_add_form_fields', 'add_homepage_category_checkbox', 10, 1 );
 
-// Save the checkbox value
+/**
+ * Saves the 'show on homepage' checkbox value for a product category.
+ *
+ * This function is hooked to WordPress actions for creating and editing product categories.
+ * It updates the term meta to indicate whether a category should be displayed on the homepage.
+ *
+ * @param int $term_id The ID of the product category being saved or created.
+ * @since 1.0.0
+ */
 function save_homepage_category_checkbox( $term_id ) {
 	$value = isset( $_POST['show_on_homepage'] ) ? 1 : 0;
 	update_term_meta( $term_id, 'show_on_homepage', $value );
@@ -138,24 +252,307 @@ function save_homepage_category_checkbox( $term_id ) {
 add_action( 'edited_product_cat', 'save_homepage_category_checkbox', 10, 1 );
 add_action( 'created_product_cat', 'save_homepage_category_checkbox', 10, 1 );
 
-// enqueue custom script wp-content/themes/f2forganics/assets/js/custom.js
-function f2forganics_enqueue_custom_script() {
-	wp_enqueue_script( 'custom-js', get_template_directory_uri() . '/assets/js/custom.js', array( 'jquery' ), null, true );
-}
-add_action( 'wp_enqueue_scripts', 'f2forganics_enqueue_custom_script' );
-
-// remove woocommerce_breadcrumb from hook woocommerce_before_main_content
+// Remove woocommerce_breadcrumb from hook woocommerce_before_main_content
 remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20 );
 
-add_filter(
-	'woocommerce_breadcrumb_defaults',
-	function ( $defaults ) {
-		$defaults['delimiter']   = ' &nbsp/ ';
-		$defaults['wrap_before'] = '<span class="txt-m-201 cl0 flex-c-m flex-w custom-breadcrumb">';
-		$defaults['wrap_after']  = '</span>';
-		return $defaults;
-	}
-);
+// Customise WooCommerce breadcrumbs
+function customize_wc_breadcrumbs( $defaults ) {
+	$defaults['delimiter']   = ' &nbsp/ ';
+	$defaults['wrap_before'] = '<span class="txt-m-201 cl0 flex-c-m flex-w custom-breadcrumb">';
+	$defaults['wrap_after']  = '</span>';
+	return $defaults;
+}
+add_filter( 'woocommerce_breadcrumb_defaults', 'customize_wc_breadcrumbs' );
 
-// Remove default add to cart button from loop
+// Remove default add to cart button from products loop
 remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
+
+// Remove default price from products loop
+remove_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_price', 10 );
+
+/**
+ * Adds custom product display and cart controls to shop loop items.
+ *
+ * Renders a custom product block with price, variation selection (for variable products),
+ * and quantity controls. Handles both variable and simple products, showing appropriate
+ * UI elements for adding or adjusting cart quantities.
+ *
+ * @hooked woocommerce_after_shop_loop_item
+ * @since 1.0.0
+ */
+function custom_product_loop_display() {
+	global $product;
+
+	$product_id     = $product->get_id();
+	$product_type   = $product->get_type();
+	$qty            = 0;
+	$variation_data = [];
+
+	// Prepare a lookup of variation_id => quantity from cart
+	if ( WC()->cart && ! WC()->cart->is_empty() ) {
+		foreach ( WC()->cart->get_cart() as $cart_item ) {
+			if ( isset( $cart_item['variation_id'] ) && $cart_item['variation_id'] > 0 ) {
+				$variation_data[ $cart_item['variation_id'] ] = $cart_item['quantity'];
+			}
+		}
+	}
+	?>
+
+	<div class="custom-product">
+		<span class="price">
+			<?php
+			if ( $product->is_type( 'variable' ) ) {
+				// Loop through variations to find '1 kg' or '1 l'
+				foreach ( $product->get_available_variations() as $var ) {
+					$var_obj  = wc_get_product( $var['variation_id'] );
+					$var_name = wc_get_formatted_variation( $var_obj, true, false );
+
+					if ( in_array( $var_name, [ '1 kg', '1 l' ] ) ) {
+						echo wp_kses_post( $var_obj->get_price_html() );
+						break;
+					}
+				}
+			} else {
+				echo wp_kses_post( $product->get_price_html() );
+			}
+			?>
+		</span>
+
+
+		<div class="custom-cart-controls" data-product-id="<?php echo esc_attr( $product_id ); ?>"
+			data-product-type="<?php echo esc_attr( $product_type ); ?>">
+
+			<?php if ( $product->is_type( 'variable' ) ) : ?>
+				<select class="variation-select">
+					<?php foreach ( $product->get_available_variations() as $var ) : ?>
+						<?php
+						$var_id   = $var['variation_id'];
+						$var_qty  = isset( $variation_data[ $var_id ] ) ? $variation_data[ $var_id ] : 0;
+						$var_attr = $var['attributes'];
+						$var_obj  = new WC_Product_Variation( $var_id );
+						$var_name = wc_get_formatted_variation( $var_obj, true, false );
+						?>
+						<option value="<?php echo esc_attr( $var_id ); ?>" data-variation-qty="<?php echo esc_attr( $var_qty ); ?>"
+							data-attributes="<?php echo esc_attr( wp_json_encode( $var_attr ) ); ?>" <?php selected( in_array( $var_name, [ '1 kg', '1 l' ] ), true ); ?>
+							data-price="<?php echo esc_attr( $var_obj->get_price_html() ); ?>">
+							<?php echo esc_html( $var_name ); ?>
+						</option>
+					<?php endforeach; ?>
+				</select>
+
+				<div class="variation-actions"></div>
+
+			<?php else : ?>
+				<div class="non-variation-select">
+					<span><?php echo esc_html( ! empty( $product->get_weight() ) ? $product->get_weight() : '1' ) . ' ' . esc_html( get_option( 'woocommerce_weight_unit' ) ); ?></span>
+				</div>
+
+				<div class="non-variation-actions">
+					<?php
+					// Simple product quantity
+					$cart_id   = WC()->cart->generate_cart_id( $product_id );
+					$cart_item = WC()->cart->get_cart_item( $cart_id );
+					$qty       = isset( $cart_item['quantity'] ) ? $cart_item['quantity'] : 0;
+					?>
+					<?php if ( 0 === $qty ) : ?>
+						<button class="add-to-cart-btn">Add</button>
+					<?php else : ?>
+						<div class="quantity-controls">
+							<button class="decrease-qty">−</button>
+							<input type="number" class="qty-input" value="<?php echo esc_attr( $qty ); ?>" min="1" readonly>
+							<button class="increase-qty">+</button>
+						</div>
+					<?php endif; ?>
+				</div>
+			<?php endif; ?>
+		</div>
+	</div>
+
+	<?php
+}
+add_action( 'woocommerce_after_shop_loop_item', 'custom_product_loop_display', 10 );
+
+/**
+ * Updates the cart quantity for a product via AJAX.
+ *
+ * Handles adding, updating, or removing cart items for both simple and variable products.
+ * Supports updating cart quantities through an AJAX request with product ID and quantity.
+ *
+ * @since 1.0.0
+ * @access public
+ *
+ * @return void Sends a JSON response with cart update status
+ */
+function custom_update_cart_quantity() {
+	if ( ! isset( $_POST['product_id'], $_POST['quantity'] ) ) {
+		wp_send_json_error( [ 'message' => 'Invalid data.' ] );
+	}
+
+	$product_id = (int) $_POST['product_id'];
+	$quantity   = max( 0, (int) $_POST['quantity'] );
+	$variation  = isset( $_POST['variation'] ) ? (array) $_POST['variation'] : [];
+
+	$cart = WC()->cart;
+
+	// Detect if it's a variation
+	$product = wc_get_product( $product_id );
+	if ( $product && $product->is_type( 'variation' ) ) {
+		$variation_id = $product_id;
+		$parent_id    = $product->get_parent_id();
+
+		$cart_id       = $cart->generate_cart_id( $parent_id, $variation_id, $variation );
+		$cart_item_key = $cart->find_product_in_cart( $cart_id );
+
+		if ( $cart_item_key ) {
+			if ( $quantity > 0 ) {
+				$cart->set_quantity( $cart_item_key, $quantity );
+			} else {
+				$cart->remove_cart_item( $cart_item_key );
+			}
+		} elseif ( $quantity > 0 ) {
+			$cart->add_to_cart( $parent_id, $quantity, $variation_id, $variation );
+		}
+	} else {
+		// Simple product
+		$cart_id       = $cart->generate_cart_id( $product_id );
+		$cart_item_key = $cart->find_product_in_cart( $cart_id );
+
+		if ( $cart_item_key ) {
+			if ( $quantity > 0 ) {
+				$cart->set_quantity( $cart_item_key, $quantity );
+			} else {
+				$cart->remove_cart_item( $cart_item_key );
+			}
+		} elseif ( $quantity > 0 ) {
+			$cart->add_to_cart( $product_id, $quantity );
+		}
+	}
+
+	WC()->cart->calculate_totals();
+
+	wp_send_json_success( [ 'message' => 'Cart updated.' ] );
+}
+add_action( 'wp_ajax_update_cart_quantity', 'custom_update_cart_quantity' );
+add_action( 'wp_ajax_nopriv_update_cart_quantity', 'custom_update_cart_quantity' );
+
+// Remove the default rating from the products loop
+remove_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_rating', 5 );
+
+// Remove the default thumbnail from the products loop
+remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10 );
+
+/**
+ * Outputs a custom product thumbnail for WooCommerce product loops.
+ *
+ * Checks if the current product has a featured image and generates a thumbnail
+ * with nested div wrappers for styling purposes. Uses WooCommerce's default
+ * product thumbnail generation method.
+ *
+ * @since 1.0.0
+ * @access public
+ */
+function custom_product_thumbnail() {
+	global $product;
+
+	if ( has_post_thumbnail( $product->get_id() ) ) {
+		echo '<div class="product-thumbnail">';
+		echo '<div class="product-thumbnail-img">';
+		echo woocommerce_get_product_thumbnail();
+		echo '</div>';
+		echo '</div>';
+	}
+}
+add_action( 'woocommerce_before_shop_loop_item_title', 'custom_product_thumbnail', 10 );
+
+/**
+ * Adds a custom meta box for product subtitle on the product edit screen.
+ *
+ * This function registers a meta box that allows adding a subtitle to WooCommerce products
+ * in the WordPress admin panel. The meta box appears in the normal context with default priority.
+ *
+ * @since 1.0.0
+ * @access public
+ */
+function custom_add_product_meta_box() {
+	add_meta_box(
+		'product_subtitle',           // ID
+		'Product Subtitle',           // Title
+		'product_subtitle_callback',  // Callback function
+		'product',                    // Post type
+		'normal',                     // Context
+		'default'                     // Priority
+	);
+}
+add_action( 'add_meta_boxes', 'custom_add_product_meta_box' );
+
+/**
+ * Callback function for rendering the product subtitle meta box.
+ *
+ * This function displays a textarea input for entering a product subtitle
+ * in the WordPress admin panel when editing a product. It retrieves any
+ * existing subtitle and populates the textarea with its current value.
+ *
+ * @param WP_Post $post The current post object being edited.
+ * @since 1.0.0
+ * @access public
+ */
+function product_subtitle_callback( $post ) {
+	wp_nonce_field( 'product_subtitle_nonce_action', 'product_subtitle_nonce' );
+
+	$storage = get_post_meta( $post->ID, '_product_subtitle', true );
+	?>
+	<p>
+		<label for="product_subtitle"><strong>Enter Product Subtitle:</strong></label><br>
+		<textarea id="product_subtitle" name="product_subtitle" rows="4"
+			style="width:100%;"><?php echo esc_textarea( $storage ); ?></textarea>
+	</p>
+	<?php
+}
+
+/**
+ * Saves the product subtitle when a product post is saved.
+ *
+ * This function handles the saving of a product subtitle to post meta when a product
+ * is created or updated in the WordPress admin panel. It includes security checks
+ * for nonce verification, autosave prevention, and user capabilities.
+ *
+ * @param int $post_id The ID of the post being saved.
+ * @since 1.0.0
+ * @access public
+ */
+function save_product_subtitle( $post_id ) {
+	if ( ! isset( $_POST['product_subtitle_nonce'] ) ||
+		! wp_verify_nonce( $_POST['product_subtitle_nonce'], 'product_subtitle_nonce_action' ) ) {
+		return;
+	}
+
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+		return;
+	if ( ! current_user_can( 'edit_post', $post_id ) )
+		return;
+
+	if ( isset( $_POST['product_subtitle'] ) ) {
+		update_post_meta( $post_id, '_product_subtitle', sanitize_textarea_field( $_POST['product_subtitle'] ) );
+	}
+}
+add_action( 'save_post_product', 'save_product_subtitle' );
+
+/**
+ * Displays the subtitle for a product in the WooCommerce shop loop.
+ *
+ * Retrieves the product subtitle from post meta, with a default fallback text.
+ * Outputs the subtitle as an H4 element with a title attribute for additional context.
+ *
+ * @since 1.0.0
+ * @access public
+ */
+function display_product_subtitle() {
+	global $post;
+
+	$product_subtitle = get_post_meta( $post->ID, '_product_subtitle', true );
+
+	$product_subtitle = empty( $product_subtitle ) ? 'Organic | Nutritious' : $product_subtitle;
+
+	echo '<h4 class="product_subtitle" title="' . esc_attr( $product_subtitle ) . '">' . esc_html( $product_subtitle ) . '</h4>';
+}
+add_action( 'woocommerce_shop_loop_item_title', 'display_product_subtitle', 20 );

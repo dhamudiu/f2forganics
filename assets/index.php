@@ -1,20 +1,15 @@
 <?php
-/*
-Template Name: Home Page
-*/
-global $ishome;
 $ishome = true;
-
-get_header();
-?>
+include( "include/header.php" ); ?>
 
 <section class="sec-slider">
 	<div class="rev_slider_wrapper fullwidthbanner-container">
 		<div id="rev_slider_1" class="rev_slide fullwidthabanner" data-version="5.4.5" style="display:none">
 			<ul>
+
 				<li data-transition="fade">
-					<img src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/bg-slide-03.jpg'; ?>" alt="IMG-BG"
-						class="rev-slidebg">
+
+					<img src="images/bg-slide-03.jpg" alt="IMG-BG" class="rev-slidebg">
 
 					<div class="tp-caption tp-resizeme layer1"
 						data-frames="[{&quot;delay&quot;:1300,&quot;speed&quot;:1300,&quot;frame&quot;:&quot;0&quot;,&quot;from&quot;:&quot;x:-200px;skX:85px;opacity:0;&quot;,&quot;to&quot;:&quot;o:1;&quot;,&quot;ease&quot;:&quot;Power3.easeInOut&quot;},{&quot;delay&quot;:&quot;wait&quot;,&quot;speed&quot;:300,&quot;frame&quot;:&quot;999&quot;,&quot;to&quot;:&quot;auto:auto;&quot;,&quot;ease&quot;:&quot;Power3.easeInOut&quot;}]"
@@ -44,8 +39,7 @@ get_header();
 				</li>
 				<li data-transition="fade">
 
-					<img src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/bg-slide-01.jpg'; ?>" alt="IMG-BG"
-						class="rev-slidebg">
+					<img src="images/bg-slide-01.jpg" alt="IMG-BG" class="rev-slidebg">
 
 					<div class="tp-caption tp-resizeme layer1"
 						data-frames="[{&quot;delay&quot;:1300,&quot;speed&quot;:1300,&quot;frame&quot;:&quot;0&quot;,&quot;from&quot;:&quot;y:50px;opacity:0;&quot;,&quot;to&quot;:&quot;o:1;&quot;,&quot;ease&quot;:&quot;Power3.easeInOut&quot;},{&quot;delay&quot;:&quot;wait&quot;,&quot;speed&quot;:300,&quot;frame&quot;:&quot;999&quot;,&quot;to&quot;:&quot;opacity:0;&quot;,&quot;ease&quot;:&quot;Power3.easeInOut&quot;}]"
@@ -77,8 +71,7 @@ get_header();
 
 				<li data-transition="fade">
 
-					<img src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/bg-slide-02.jpg'; ?>" alt="IMG-BG"
-						class="rev-slidebg">
+					<img src="images/bg-slide-02.jpg" alt="IMG-BG" class="rev-slidebg">
 
 					<div class="tp-caption tp-resizeme layer1"
 						data-frames="[{&quot;delay&quot;:500,&quot;speed&quot;:1300,&quot;frame&quot;:&quot;0&quot;,&quot;from&quot;:&quot;y:150px;opacity:0;&quot;,&quot;to&quot;:&quot;o:1;&quot;,&quot;ease&quot;:&quot;Power3.easeInOut&quot;},{&quot;delay&quot;:&quot;wait&quot;,&quot;speed&quot;:300,&quot;frame&quot;:&quot;999&quot;,&quot;to&quot;:&quot;opacity:0;&quot;,&quot;ease&quot;:&quot;Power3.easeInOut&quot;}]"
@@ -113,63 +106,13 @@ get_header();
 	</div>
 </section>
 
-<section class="popular-categories p-t-145 p-b-100">
+<section class="sec-welcome bg0 p-t-145">
 	<div class="container">
-		<div class="size-a-1 flex-col-c-m p-b-48">
-			<div class="txt-center txt-m-201 cl10 how-pos1-parent m-b-14">
-				Popular Categories
-				<div class="how-pos1">
-					<img src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/icons/symbol-02.png'; ?>" alt="IMG">
-				</div>
-			</div>
-
-			<h3 class="txt-center txt-l-101 cl3 respon1">Popular Categories</h3>
-		</div>
-
-		<div class="category-grid">
-			<?php
-			$product_categories = get_terms(
-				array(
-					'taxonomy'   => 'product_cat',
-					// 'orderby'    => 'count',
-					// 'order'      => 'DESC',
-					'hide_empty' => false,
-					'number'     => 11,
-				)
-			);
-
-			foreach ( $product_categories as $category ) {
-				$show = get_term_meta( $category->term_id, 'show_on_homepage', true );
-
-				if ( $show ) {
-					$thumbnail_id  = get_term_meta( $category->term_id, 'thumbnail_id', true );
-					$image_url     = wp_get_attachment_url( $thumbnail_id );
-					$category_link = get_term_link( $category );
-					?>
-					<div class="category-item">
-						<a href="<?php echo esc_url( $category_link ); ?>">
-							<div class="category-image">
-								<img src="<?php echo esc_url( $image_url ); ?>"
-									alt="<?php echo esc_attr( $category->name ); ?>" />
-							</div>
-
-							<p><?php echo esc_html( $category->name ); ?></p>
-						</a>
-					</div>
-				<?php } ?>
-			<?php } ?>
-		</div>
-	</div>
-</section>
-
-<section class="sec-welcome bg0 p-t-145 m-b-145"
-	style="background-image: url('<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/bg-01.jpg'; ?>');">
-	<div class="container p-b-100">
-		<div class="txt-center size-a-1 flex-col-c-m">
+		<div class="txt-center size-a-1 flex-col-c-m p-b-90">
 			<div class="txt-m-201 cl10 how-pos1-parent m-b-14">
 				Your Gateway to Healthier Living
 				<div class="how-pos1">
-					<img src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/icons/symbol-02.png'; ?>" alt="IMG">
+					<img src="images/icons/symbol-02.png" alt="IMG">
 				</div>
 			</div>
 			<h3 class="txt-center txt-l-101 cl3 respon1 m-b-20">
@@ -190,157 +133,273 @@ get_header();
 				</p>
 			</div>
 		</div>
-	</div>
-	<div class="bg0 p-t-100">
-		<div class="container">
-			<div class="wrap-pic-max-w flex-c-t flex-w p-t-255 item-welcome-parent">
-				<img class="size-w-1" src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/other-01.jpg'; ?>"
-					alt="IMG" style="border-radius: 100px;">
+		<div class="wrap-pic-max-w flex-c-t flex-w p-t-255 item-welcome-parent">
+			<img class="size-w-1" src="images/other-01.jpg" alt="IMG">
 
-				<div class="item-welcome one">
-					<div class="item-welcome-pic pos-relative">
-						<div class="wrap-pic-max-w flex-c-m item-welcome-pic-dark trans-04">
-							<img src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/icons/icon1.png'; ?>"
-								alt="IMG">
-						</div>
-						<div class="wrap-pic-max-w flex-c-m s-full ab-t-l item-welcome-pic-light trans-04">
-							<img src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/icons/icon1.1.png'; ?>"
-								alt="IMG">
-						</div>
+			<div class="item-welcome one">
+				<div class="item-welcome-pic pos-relative">
+					<div class="wrap-pic-max-w flex-c-m item-welcome-pic-dark trans-04">
+						<img src="images/icons/icon1.png" alt="IMG">
 					</div>
-					<div class="item-welcome-txt p-t-27">
-						<h4 class="txt-m-101 cl3 txt-center p-b-11">
-							100% Organic
-						</h4>
-						<p class="txt-s-101 cl6 txt-center">
-							Pure, natural products free from chemicals and additives.
-						</p>
+					<div class="wrap-pic-max-w flex-c-m s-full ab-t-l item-welcome-pic-light trans-04">
+						<img src="images/icons/icon1.1.png" alt="IMG">
 					</div>
 				</div>
+				<div class="item-welcome-txt p-t-27">
+					<h4 class="txt-m-101 cl3 txt-center p-b-11">
+						100% Organic
+					</h4>
+					<p class="txt-s-101 cl6 txt-center">
+						Pure, natural products free from chemicals and additives.
+					</p>
+				</div>
+			</div>
 
-				<div class="item-welcome two">
-					<div class="item-welcome-pic pos-relative">
-						<div class="wrap-pic-max-w flex-c-m item-welcome-pic-dark trans-04">
-							<img src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/icons/icon2.png'; ?>"
-								alt="IMG">
-						</div>
-						<div class="wrap-pic-max-w flex-c-m s-full ab-t-l item-welcome-pic-light trans-04">
-							<img src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/icons/icon2.2.png'; ?>"
-								alt="IMG">
-						</div>
+			<div class="item-welcome two">
+				<div class="item-welcome-pic pos-relative">
+					<div class="wrap-pic-max-w flex-c-m item-welcome-pic-dark trans-04">
+						<img src="images/icons/icon2.png" alt="IMG">
 					</div>
-					<div class="item-welcome-txt p-t-27">
-						<h4 class="txt-m-101 cl3 txt-center p-b-11">
-							family healthy
-						</h4>
-						<p class="txt-s-101 cl6 txt-center">
-							Family Healthy offers tips and resources for balanced family well-being.
-						</p>
+					<div class="wrap-pic-max-w flex-c-m s-full ab-t-l item-welcome-pic-light trans-04">
+						<img src="images/icons/icon2.2.png" alt="IMG">
 					</div>
 				</div>
+				<div class="item-welcome-txt p-t-27">
+					<h4 class="txt-m-101 cl3 txt-center p-b-11">
+						family healthy
+					</h4>
+					<p class="txt-s-101 cl6 txt-center">
+						Family Healthy offers tips and resources for balanced family well-being.
+					</p>
+				</div>
+			</div>
 
-				<div class="item-welcome three">
-					<div class="item-welcome-pic pos-relative">
-						<div class="wrap-pic-max-w flex-c-m item-welcome-pic-dark trans-04">
-							<img src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/icons/icon3.png'; ?>"
-								alt="IMG">
-						</div>
-						<div class="wrap-pic-max-w flex-c-m s-full ab-t-l item-welcome-pic-light trans-04">
-							<img src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/icons/icon3.3.png'; ?>"
-								alt="IMG">
-						</div>
+			<div class="item-welcome three">
+				<div class="item-welcome-pic pos-relative">
+					<div class="wrap-pic-max-w flex-c-m item-welcome-pic-dark trans-04">
+						<img src="images/icons/icon3.png" alt="IMG">
 					</div>
-					<div class="item-welcome-txt p-t-27">
-						<h4 class="txt-m-101 cl3 txt-center p-b-11">
-							Always Fresh
-						</h4>
-						<p class="txt-s-101 cl6 txt-center">
-							Delivering the freshest quality products daily.
-						</p>
+					<div class="wrap-pic-max-w flex-c-m s-full ab-t-l item-welcome-pic-light trans-04">
+						<img src="images/icons/icon3.3.png" alt="IMG">
 					</div>
 				</div>
+				<div class="item-welcome-txt p-t-27">
+					<h4 class="txt-m-101 cl3 txt-center p-b-11">
+						Always Fresh
+					</h4>
+					<p class="txt-s-101 cl6 txt-center">
+						Delivering the freshest quality products daily.
+					</p>
+				</div>
+			</div>
 
-				<div class="item-welcome four">
-					<div class="item-welcome-pic pos-relative">
-						<div class="wrap-pic-max-w flex-c-m item-welcome-pic-dark trans-04">
-							<img src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/icons/icon4.png'; ?>"
-								alt="IMG">
-						</div>
-						<div class="wrap-pic-max-w flex-c-m s-full ab-t-l item-welcome-pic-light trans-04">
-							<img src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/icons/icon4.4.png'; ?>"
-								alt="IMG">
-						</div>
+			<div class="item-welcome four">
+				<div class="item-welcome-pic pos-relative">
+					<div class="wrap-pic-max-w flex-c-m item-welcome-pic-dark trans-04">
+						<img src="images/icons/icon4.png" alt="IMG">
 					</div>
-					<div class="item-welcome-txt p-t-27">
-						<h4 class="txt-m-101 cl3 txt-center p-b-11">
-							Food safety
-						</h4>
-						<p class="txt-s-101 cl6 txt-center">
-							Food safety ensures food is handled, prepared, and stored to prevent illness.
-						</p>
+					<div class="wrap-pic-max-w flex-c-m s-full ab-t-l item-welcome-pic-light trans-04">
+						<img src="images/icons/icon4.4.png" alt="IMG">
 					</div>
+				</div>
+				<div class="item-welcome-txt p-t-27">
+					<h4 class="txt-m-101 cl3 txt-center p-b-11">
+						Food safety
+					</h4>
+					<p class="txt-s-101 cl6 txt-center">
+						Food safety ensures food is handled, prepared, and stored to prevent illness.
+					</p>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
 
-<section class="our-products bg0 p-t-145 p-b-85 woocommerce">
+<div class="sec-product bg0 p-t-145 p-b-25">
 	<div class="container">
 		<div class="size-a-1 flex-col-c-m p-b-48">
 			<div class="txt-center txt-m-201 cl10 how-pos1-parent m-b-14">
-				Our Products
+				Featured Products
 				<div class="how-pos1">
-					<img src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/icons/symbol-02.png'; ?>" alt="IMG">
+					<img src="images/icons/symbol-02.png" alt="IMG">
 				</div>
 			</div>
-
-			<h3 class="txt-center txt-l-101 cl3 respon1">Empowering Growth, Naturally</h3>
+			<h3 class="txt-center txt-l-101 cl3 respon1">
+				Our products
+			</h3>
 		</div>
+		<div class="row gallery-lb">
+			<div class="col-sm-6 col-md-4 col-lg-3 p-b-75">
+				<div class="block1">
+					<div class="block1-bg wrap-pic-w bo-all-1 bocl12 hov3 trans-04">
+						<img src="images/product-01.jpg" alt="IMG">
+						<div class="block1-content flex-col-c-m p-b-30">
+							<a class="txt-m-103 cl3 txt-center hov-cl10 trans-04 js-name-b1">
+								Desi millet
+							</a>
+							<div class="block1-wrap-icon flex-c-m flex-w trans-05">
+								<a href="images/product-01.jpg"
+									class="block1-icon flex-c-m wrap-pic-max-w js-show-gallery">
+									<img src="images/icons/icon-view.png" alt="ICON">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-4 col-lg-3 p-b-75">
+				<div class="block1">
+					<div class="block1-bg wrap-pic-w bo-all-1 bocl12 hov3 trans-04">
+						<img src="images/product-02.jpg" alt="IMG">
+						<div class="block1-content flex-col-c-m p-b-30">
+							<a class="txt-m-103 cl3 txt-center hov-cl10 trans-04 js-name-b1">
+								Barley
+							</a>
+							<div class="block1-wrap-icon flex-c-m flex-w trans-05">
+								<a href="images/product-02.jpg"
+									class="block1-icon flex-c-m wrap-pic-max-w js-show-gallery">
+									<img src="images/icons/icon-view.png" alt="ICON">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-4 col-lg-3 p-b-75">
 
-		<ul class="products">
-			<?php
-			$args = array(
-				'post_type'      => 'product',
-				'posts_per_page' => 8,
-			);
+				<div class="block1">
+					<div class="block1-bg wrap-pic-w bo-all-1 bocl12 hov3 trans-04">
+						<img src="images/product-03.jpg" alt="IMG">
+						<div class="block1-content flex-col-c-m p-b-30">
+							<a class="txt-m-103 cl3 txt-center hov-cl10 trans-04 js-name-b1">
+								Red chilli powder
+							</a>
+							<div class="block1-wrap-icon flex-c-m flex-w trans-05">
+								<a href="images/product-03.jpg"
+									class="block1-icon flex-c-m wrap-pic-max-w js-show-gallery">
+									<img src="images/icons/icon-view.png" alt="ICON">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-4 col-lg-3 p-b-75">
 
-			$loop = new WP_Query( $args );
+				<div class="block1">
+					<div class="block1-bg wrap-pic-w bo-all-1 bocl12 hov3 trans-04">
+						<img src="images/product-04.jpg" alt="IMG">
+						<div class="block1-content flex-col-c-m p-b-30">
+							<a class="txt-m-103 cl3 txt-center hov-cl10 trans-04 js-name-b1">
+								Wheat corp
+							</a>
+							<div class="block1-wrap-icon flex-c-m flex-w trans-05">
+								<a href="images/product-04.jpg"
+									class="block1-icon flex-c-m wrap-pic-max-w js-show-gallery">
+									<img src="images/icons/icon-view.png" alt="ICON">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-4 col-lg-3 p-b-75">
 
-			while ( $loop->have_posts() ) :
-				$loop->the_post();
-				wc_get_template_part( 'content', 'product' );
-			endwhile;
+				<div class="block1">
+					<div class="block1-bg wrap-pic-w bo-all-1 bocl12 hov3 trans-04">
+						<img src="images/product-05.jpg" alt="IMG">
+						<div class="block1-content flex-col-c-m p-b-30">
+							<a class="txt-m-103 cl3 txt-center hov-cl10 trans-04 js-name-b1">
+								Arad Dal
+							</a>
+							<div class="block1-wrap-icon flex-c-m flex-w trans-05">
+								<a href="images/product-05.jpg"
+									class="block1-icon flex-c-m wrap-pic-max-w js-show-gallery">
+									<img src="images/icons/icon-view.png" alt="ICON">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-4 col-lg-3 p-b-75">
 
-			wp_reset_postdata();
-			?>
-		</ul>
+				<div class="block1">
+					<div class="block1-bg wrap-pic-w bo-all-1 bocl12 hov3 trans-04">
+						<img src="images/product-06.jpg" alt="IMG">
+						<div class="block1-content flex-col-c-m p-b-30">
+							<a class="txt-m-103 cl3 txt-center hov-cl10 trans-04 js-name-b1">
+								Bansi Wheat
+							</a>
+							<div class="block1-wrap-icon flex-c-m flex-w trans-05">
+								<a href="images/product-06.jpg"
+									class="block1-icon flex-c-m wrap-pic-max-w js-show-gallery">
+									<img src="images/icons/icon-view.png" alt="ICON">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-4 col-lg-3 p-b-75">
+
+				<div class="block1">
+					<div class="block1-bg wrap-pic-w bo-all-1 bocl12 hov3 trans-04">
+						<img src="images/product-07.jpg" alt="IMG">
+						<div class="block1-content flex-col-c-m p-b-30">
+							<a class="txt-m-103 cl3 txt-center hov-cl10 trans-04 js-name-b1">
+								Cut Wheat
+							</a>
+							<div class="block1-wrap-icon flex-c-m flex-w trans-05">
+								<a href="images/product-07.jpg"
+									class="block1-icon flex-c-m wrap-pic-max-w js-show-gallery">
+									<img src="images/icons/icon-view.png" alt="ICON">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-md-4 col-lg-3 p-b-75">
+
+				<div class="block1">
+					<div class="block1-bg wrap-pic-w bo-all-1 bocl12 hov3 trans-04">
+						<img src="images/product-08.jpg" alt="IMG">
+						<div class="block1-content flex-col-c-m p-b-30">
+							<a class="txt-m-103 cl3 txt-center hov-cl10 trans-04 js-name-b1">
+								Black Mustache Rice
+							</a>
+							<div class="block1-wrap-icon flex-c-m flex-w trans-05">
+								<a href="images/product-08.jpg"
+									class="block1-icon flex-c-m wrap-pic-max-w js-show-gallery">
+									<img src="images/icons/icon-view.png" alt="ICON">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-</section>
+</div>
 
-<section class="sec-deal bg-img1"
-	style="background-image: url('<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/bg-01.jpg'; ?>');">
+<section class="sec-deal bg-img1" style="background-image: url('images/bg-01.jpg');">
 	<div class="flex-w flex-m how-pos2-parent">
-		<img class="how-pos2 respon4 dis-none-xl"
-			src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/other-03.png'; ?>" alt="IMG">
-
-		<div class="p-b-85 p-t-85 size-w-3 txt-center w-full-lg wrap-pic-max-s">
-			<img src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/other-02.png'; ?>" alt="IMG">
+		<img class="how-pos2 respon4 dis-none-xl" src="images/other-03.png" alt="IMG">
+		<div class="size-w-3 txt-center wrap-pic-max-s w-full-lg">
+			<img src="images/other-02.png" alt="IMG">
 		</div>
-
 		<div class="size-w-4 p-t-105 p-b-90 p-r-15 respon3">
 			<div class="p-b-32">
 				<div class="txt-m-105 cl6 hov-cl10 trans-04 m-b-30">
 					Explore the Best of Organic Living Today
 				</div>
-
 				<p class="txt-s-102 cl9 m-b-15">
 					Ready to make a healthier choice for you and your family? Visit “Farm to Family Organic” Mall to
 					explore our wide range of farm-fresh, organic products that promote wellness and sustainability.
 					Whether you're looking for seasonal produce, organic dairy, or eco-friendly household essentials,
 					we've got you covered.
 				</p>
-
 				<p class="txt-s-102 cl9">
 					Prefer to shop from the comfort of your home? Our online store makes it easy to browse and order all
 					your favorite organic items with just a few clicks. Enjoy the convenience of doorstep delivery,
@@ -353,10 +412,8 @@ get_header();
 </section>
 
 <div class="sec-testimonials bg12 p-t-120 p-b-80 how-pos3-parent how-pos4-parent">
-	<img class="how-pos3 dis-none-xl" src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/other-04.png'; ?>"
-		alt="IMG">
-	<img class="how-pos4 dis-none-xl" src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/other-05.png'; ?>"
-		alt="IMG">
+	<img class="how-pos3 dis-none-xl" src="images/other-04.png" alt="IMG">
+	<img class="how-pos4 dis-none-xl" src="images/other-05.png" alt="IMG">
 	<div class="container">
 
 		<div class="wrap-slick3">
@@ -365,8 +422,7 @@ get_header();
 					<div class="flex-col-c-m">
 						<div class="layer-slick3 animated visible-false" data-appear="zoomIn" data-delay="100">
 							<div class="wrap-pic-s size-a-3 bo-3-rad-50per bocl10 of-hidden">
-								<img src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/avatar-01.jpg'; ?>"
-									alt="AVATAR">
+								<img src="images/avatar-01.jpg" alt="AVATAR">
 							</div>
 						</div>
 						<div class="layer-slick3 animated visible-false" data-appear="fadeInUp" data-delay="800">
@@ -400,8 +456,7 @@ get_header();
 					<div class="flex-col-c-m">
 						<div class="layer-slick3 animated visible-false" data-appear="zoomIn" data-delay="100">
 							<div class="wrap-pic-s size-a-3 bo-3-rad-50per bocl10 of-hidden">
-								<img src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/avatar-02.jpg'; ?>"
-									alt="AVATAR">
+								<img src="images/avatar-02.jpg" alt="AVATAR">
 							</div>
 						</div>
 						<div class="layer-slick3 animated visible-false" data-appear="fadeInUp" data-delay="800">
@@ -435,8 +490,7 @@ get_header();
 					<div class="flex-col-c-m">
 						<div class="layer-slick3 animated visible-false" data-appear="zoomIn" data-delay="100">
 							<div class="wrap-pic-s size-a-3 bo-3-rad-50per bocl10 of-hidden">
-								<img src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/images/avatar-03.jpg'; ?>"
-									alt="AVATAR">
+								<img src="images/avatar-03.jpg" alt="AVATAR">
 							</div>
 						</div>
 						<div class="layer-slick3 animated visible-false" data-appear="fadeInUp" data-delay="800">
@@ -472,4 +526,30 @@ get_header();
 	</div>
 </div>
 
-<?php get_footer(); ?>
+<section class="sec-subscribe bg13 p-t-65 p-b-65">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-5 p-tb-15">
+				<div class="h-full flex-col-m">
+					<h4 class="txt-m-110 cl3 p-b-4">
+						Subscribe Newsletter.
+					</h4>
+					<p class="txt-s-101 cl6">
+						Get e-mail updates about our latest shop and special offers.
+					</p>
+				</div>
+			</div>
+			<div class="col-md-7 p-tb-15">
+				<form class="flex-w flex-m h-full">
+					<input class="size-a-6 txt-s-106 cl6 plh0 p-rl-30 w-full-sm" type="text" name="email"
+						placeholder="Your email address">
+					<button class="bg10 size-a-5 txt-s-107 cl0 p-rl-15 trans-04 hov-btn2 mt-4 mt-sm-0">
+						Subscribe
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+
+<?php include( "include/footer.php" ); ?>

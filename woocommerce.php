@@ -20,7 +20,7 @@ $featured_image = get_the_post_thumbnail_url( get_the_ID(), 'full' );
 ?>
 
 <main id="primary" class="site-main">
-	<section class="how-overlay2 bg-img1 mb-5"
+	<section class="how-overlay2 bg-img1"
 		style="background-image: url(<?php echo esc_attr( $featured_image ); ?>);">
 		<div class="container">
 			<div class="txt-center p-t-160 p-b-165">

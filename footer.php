@@ -134,42 +134,19 @@
 	</span>
 </div>
 
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . 'm/../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js'; ?>" data-cfasync="false"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/jquery/jquery-3.2.1.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/animsition/js/animsition.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/bootstrap/js/popper.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/bootstrap/js/bootstrap.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/revolution/js/jquery.themepunch.tools.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/revolution/js/jquery.themepunch.revolution.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/revolution/js/extensions/revolution.extension.video.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/revolution/js/extensions/revolution.extension.carousel.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/revolution/js/extensions/revolution.extension.slideanims.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/revolution/js/extensions/revolution.extension.actions.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/revolution/js/extensions/revolution.extension.layeranimation.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/revolution/js/extensions/revolution.extension.kenburn.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/revolution/js/extensions/revolution.extension.navigation.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/revolution/js/extensions/revolution.extension.migration.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/revolution/js/extensions/revolution.extension.parallax.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/js/revo-custom.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/select2/select2.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/daterangepicker/moment.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/daterangepicker/daterangepicker.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/slick/slick.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/js/slick-custom.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/parallax100/parallax100.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/lightbox2/js/lightbox.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/MagnificPopup/jquery.magnific-popup.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/isotope/isotope.pkgd.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/sweetalert/sweetalert.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/countdowntime/moment.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/countdowntime/moment-timezone.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/countdowntime/moment-timezone-with-data.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/countdowntime/jquery.countdown.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/countdowntime/countdowntime.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/vendor/perfect-scrollbar/perfect-scrollbar.min.js'; ?>"></script>
-<script src="<?php echo esc_attr( F2FORGANICS_ASSETS ) . '/js/main.js'; ?>"></script>
-
 <?php wp_footer(); ?>
-</body>
 
+	<?php if ( ! is_cart() ): ?>
+		<div class="sticky-cart-container">
+			<div id="sticky-cart-summary" class="sticky-cart">
+				<div class="cart-info">
+					<span class="cart-items-count">0 items</span>
+					<span class="cart-total-price">₹ 0.00</span>
+				</div>
+
+				<a href="<?php echo wc_get_cart_url(); ?>" class="view-cart-btn">Cart</a>
+			</div>
+		</div>
+	<?php endif; ?>
+</body>
 </html>
