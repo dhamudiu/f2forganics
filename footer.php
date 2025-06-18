@@ -29,14 +29,15 @@
 					<button id="send-location-btn"
 						class="bg1 size-a-5 txt-s-107 cl0 p-rl-15 trans-04 hov-btn2 mt-4 mt-sm-0">Get
 						Location</button>
-						<p id="sms-status" style="position: absolute; top: 40px; left: 30px;"></p>
+					<p id="sms-status" style="position: absolute; top: 40px; left: 30px;"></p>
 				</div>
 			</div>
 
 			<div class="col-md-6 p-tb-15 text-center">
 				<div class="h-full flex-col-m">
 					<h4 class="txt-m-110 cl0 p-b-4">Get store location</h4>
-					<p class="cl0 txt-m-104 txt-s-101">Enter your phone number and submit to get location on your phone.</p>
+					<p class="cl0 txt-m-104 txt-s-101">Enter your phone number and submit to get location on your phone.
+					</p>
 				</div>
 			</div>
 		</div>
@@ -53,9 +54,11 @@
 							alt="LOGO">
 					</a>
 				</div>
+				<h6 class="footer-hours-heading" style="margin-bottom: 8px; font-weight: 600;">Business Hours</h6>
 				<p class="txt-s-101 cl6 size-w-10 p-b-16">
-					There are many variations of passages of Lorem Ipsum available, but the majority have suffered
-					alteration
+					<strong>Tuesday:</strong> Closed<br>
+					<strong>Open:</strong> Wednesday to Monday<br>
+					From 9:00 AM to 9:00 PM
 				</p>
 				<ul>
 					<li class="txt-s-101 cl6 flex-t p-b-10">
@@ -72,7 +75,10 @@
 								alt="ICON-MAIL">
 						</span>
 						<span class="size-w-12 p-t-1">
-							Shyamdhara - 2 Complex, Shiv Sangam Society Main Road, B/H Jalaram - 2, University Road,
+							<a href="https://maps.app.goo.gl/NQ1vUMXgL16iYACYA?g_st=aw" target="_blank"
+								rel="noopener noreferrer" style="color: inherit; text-decoration: none;">
+								Shyamdhara - 2 Complex, Shiv Sangam Society Main Road, B/H Jalaram - 2, University Road
+							</a>
 						</span>
 					</li>
 					<li class="txt-s-101 cl6 flex-t p-b-10">
@@ -84,8 +90,24 @@
 							+91 70957 30957
 						</span>
 					</li>
+
+					<li class="txt-s-101 cl6 flex-t p-b-10">
+						<div class="footer-social-links" style="margin-top: 20px;">
+							<a href="https://www.facebook.com/share/16iMo7os8z/" target="_blank"
+								rel="noopener noreferrer" style="margin-right: 15px;">
+								<i class="fa fa-facebook" style="font-size: 20px;"></i>
+							</a>
+							<a href="https://www.instagram.com/farm_to_family_organic_store?igsh=MTRhbjUwc29ubWp6MA=="
+								target="_blank" rel="noopener noreferrer">
+								<i class="fa fa-instagram" style="font-size: 20px;"></i>
+							</a>
+						</div>
+
+					</li>
 				</ul>
 			</div>
+
+
 			<div class="footer-col2">
 				<div class="footer-col-title flex-m">
 					<span class="txt-m-109 cl3">Information</span>
