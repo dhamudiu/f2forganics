@@ -556,3 +556,31 @@ function display_product_subtitle() {
 	echo '<h4 class="product_subtitle" title="' . esc_attr( $product_subtitle ) . '">' . esc_html( $product_subtitle ) . '</h4>';
 }
 add_action( 'woocommerce_shop_loop_item_title', 'display_product_subtitle', 20 );
+
+function send_store_location_sms() {
+	if ( ! isset( $_POST['phone'] ) ) {
+		wp_send_json_error( 'Phone number is required.' );
+	}
+
+	$phone = sanitize_text_field( $_POST['phone'] );
+
+	if ( ! preg_match( '/^[0-9]{10,15}$/', $phone ) ) {
+		wp_send_json_error( 'Invalid phone number.' );
+	}
+
+	// Define SMS data
+	$to   = [ $phone ]; // Should be an array
+	$msg  = 'Thank you for visiting! Here is our store location: https://goo.gl/maps/YOUR_STORE_LOCATION';
+	$urls = []; // Not used by all gateways, but here for SMS Gateway Hub compatibility
+
+	// Use WP SMS plugin function
+	$sms_sent = wp_sms_send( $to, $msg, false, null, $urls );
+
+	if ( $sms_sent ) {
+		wp_send_json_success( 'SMS sent successfully.' );
+	} else {
+		wp_send_json_error( 'Failed to send SMS. Please try again.' );
+	}
+}
+add_action( 'wp_ajax_send_store_location_sms', 'send_store_location_sms' );
+add_action( 'wp_ajax_nopriv_send_store_location_sms', 'send_store_location_sms' );

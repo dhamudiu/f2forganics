@@ -939,4 +939,9 @@ button.single_add_to_cart_button:hover {
 	.sticky-cart-container .sticky-cart {
 		width: 100%;
 	}
+
+	/* get location section */
+	.sec-send-location .row {
+		flex-direction: column-reverse;
+	}
 }

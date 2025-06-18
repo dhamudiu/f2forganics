@@ -212,3 +212,36 @@ jQuery( document ).ready( function ( $ ) {
 		window.location.href = my_ajax_data.home_url + '/shop/';
 	} );
 } );
+
+jQuery( document ).ready( function ( $ ) {
+	$( '#send-location-btn' ).on( 'click', function () {
+		const phone = $( '#sms-phone' ).val().trim();
+		const $status = $( '#sms-status' );
+
+		if ( !phone.match( /^[0-9]{10,15}$/ ) ) {
+			$status.text( 'Please enter a valid phone number.' ).css( 'color', 'red' );
+			return;
+		}
+
+		$status.text( 'Sending...' ).css( 'color', '#000' );
+
+		$.post( {
+			url: my_ajax_data.ajax_url,
+			data: {
+				action: 'send_store_location_sms',
+				phone: phone,
+			},
+			success: function ( response ) {
+				if ( response.success ) {
+					$status.text( 'Location sent successfully to ' + phone + '!' ).css( 'color', 'green' );
+					$( '#sms-phone' ).val( '' );
+				} else {
+					$status.text( 'Failed to send SMS.' ).css( 'color', 'red' );
+				}
+			},
+			error: function () {
+				$status.text( 'Server error. Try again later.' ).css( 'color', 'red' );
+			}
+		} );
+	} );
+} );
