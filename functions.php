@@ -19,7 +19,6 @@ add_action( 'after_setup_theme', 'f2forganics_setup' );
 // Enqueue styles & scripts
 function f2forganics_scripts() {
 	wp_enqueue_style( 'f2forganics-style', get_stylesheet_uri() );
-
 	wp_enqueue_script( 'custom-js', get_template_directory_uri() . '/assets/js/custom.js', array( 'jquery' ), null, true );
 
 	wp_localize_script(
@@ -30,6 +29,10 @@ function f2forganics_scripts() {
 			'home_url' => home_url(),
 		)
 	);
+
+	// Enqueue Swiper styles and scripts
+	wp_enqueue_style( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css' );
+	wp_enqueue_script( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', array( 'jquery' ), null, true );
 }
 add_action( 'wp_enqueue_scripts', 'f2forganics_scripts' );
 
@@ -89,15 +92,7 @@ function f2f_enqueue_footer_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'f2f_enqueue_footer_scripts' );
 
-/**
- * Enqueues WooCommerce Select2 script and style if WooCommerce is active.
- *
- * Adds Select2 JavaScript and CSS to the page when WooCommerce is installed,
- * which provides enhanced dropdown and select form field functionality.
- *
- * @hook wp_enqueue_scripts
- * @priority 25
- */
+// Enqueues WooCommerce Select2 script and style if WooCommerce is active.
 function f2f_enqueue_wc_select2() {
 	if ( class_exists( 'WooCommerce' ) ) {
 		wp_enqueue_script( 'select2', WC()->plugin_url() . '/assets/js/select2/select2.full.min.js', array( 'jquery' ), '4.0.13', true );
@@ -212,15 +207,7 @@ function mytheme_wc_wrapper_end() {
 }
 add_action( 'woocommerce_after_main_content', 'mytheme_wc_wrapper_end', 10 );
 
-/**
- * Adds a checkbox to the product category add/edit page to control homepage display.
- *
- * This function adds a custom checkbox field to the product category form that allows
- * administrators to choose whether a specific category should be displayed on the homepage.
- *
- * @param WP_Term $term The current product category term being edited or added.
- * @since 1.0.0
- */
+// Adds a checkbox to the product category add/edit page to control homepage display.
 function add_homepage_category_checkbox( $term ) {
 	$checked = get_term_meta( $term->term_id, 'show_on_homepage', true );
 	?>
@@ -236,15 +223,7 @@ function add_homepage_category_checkbox( $term ) {
 add_action( 'product_cat_edit_form_fields', 'add_homepage_category_checkbox', 10, 1 );
 add_action( 'product_cat_add_form_fields', 'add_homepage_category_checkbox', 10, 1 );
 
-/**
- * Saves the 'show on homepage' checkbox value for a product category.
- *
- * This function is hooked to WordPress actions for creating and editing product categories.
- * It updates the term meta to indicate whether a category should be displayed on the homepage.
- *
- * @param int $term_id The ID of the product category being saved or created.
- * @since 1.0.0
- */
+// Saves the 'show on homepage' checkbox value for a product category.
 function save_homepage_category_checkbox( $term_id ) {
 	$value = isset( $_POST['show_on_homepage'] ) ? 1 : 0;
 	update_term_meta( $term_id, 'show_on_homepage', $value );
@@ -270,23 +249,14 @@ remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_ad
 // Remove default price from products loop
 remove_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_price', 10 );
 
-/**
- * Adds custom product display and cart controls to shop loop items.
- *
- * Renders a custom product block with price, variation selection (for variable products),
- * and quantity controls. Handles both variable and simple products, showing appropriate
- * UI elements for adding or adjusting cart quantities.
- *
- * @hooked woocommerce_after_shop_loop_item
- * @since 1.0.0
- */
+// Adds custom product display and cart controls to shop loop items.
 function custom_product_loop_display() {
 	global $product;
 
 	$product_id     = $product->get_id();
 	$product_type   = $product->get_type();
 	$qty            = 0;
-	$variation_data = [];
+	$variation_data = array();
 
 	// Prepare a lookup of variation_id => quantity from cart
 	if ( WC()->cart && ! WC()->cart->is_empty() ) {
@@ -319,7 +289,7 @@ function custom_product_loop_display() {
 		</span>
 
 
-		<div class="custom-cart-controls" data-product-id="<?php echo esc_attr( $product_id ); ?>"
+		<div class="custom-cart-controls" id="custom-cart-controls" data-product-id="<?php echo esc_attr( $product_id ); ?>"
 			data-product-type="<?php echo esc_attr( $product_type ); ?>">
 
 			<?php if ( $product->is_type( 'variable' ) ) : ?>
@@ -344,7 +314,7 @@ function custom_product_loop_display() {
 
 			<?php else : ?>
 				<div class="non-variation-select">
-					<span><?php echo esc_html( ! empty( $product->get_weight() ) ? $product->get_weight() : '1' ) . ' ' . esc_html( get_option( 'woocommerce_weight_unit' ) ); ?></span>
+					<span><?php echo esc_html( ! empty( $product->get_weight() ) ? $product->get_weight() : 'Unit' ) . ' ' . esc_html( get_option( 'woocommerce_weight_unit' ) ); ?></span>
 				</div>
 
 				<div class="non-variation-actions">
@@ -372,17 +342,7 @@ function custom_product_loop_display() {
 }
 add_action( 'woocommerce_after_shop_loop_item', 'custom_product_loop_display', 10 );
 
-/**
- * Updates the cart quantity for a product via AJAX.
- *
- * Handles adding, updating, or removing cart items for both simple and variable products.
- * Supports updating cart quantities through an AJAX request with product ID and quantity.
- *
- * @since 1.0.0
- * @access public
- *
- * @return void Sends a JSON response with cart update status
- */
+// Updates the cart quantity for a product via AJAX.
 function custom_update_cart_quantity() {
 	if ( ! isset( $_POST['product_id'], $_POST['quantity'] ) ) {
 		wp_send_json_error( [ 'message' => 'Invalid data.' ] );
@@ -441,16 +401,7 @@ remove_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_l
 // Remove the default thumbnail from the products loop
 remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10 );
 
-/**
- * Outputs a custom product thumbnail for WooCommerce product loops.
- *
- * Checks if the current product has a featured image and generates a thumbnail
- * with nested div wrappers for styling purposes. Uses WooCommerce's default
- * product thumbnail generation method.
- *
- * @since 1.0.0
- * @access public
- */
+// Outputs a custom product thumbnail for WooCommerce product loops.
 function custom_product_thumbnail() {
 	global $product;
 
@@ -464,15 +415,7 @@ function custom_product_thumbnail() {
 }
 add_action( 'woocommerce_before_shop_loop_item_title', 'custom_product_thumbnail', 10 );
 
-/**
- * Adds a custom meta box for product subtitle on the product edit screen.
- *
- * This function registers a meta box that allows adding a subtitle to WooCommerce products
- * in the WordPress admin panel. The meta box appears in the normal context with default priority.
- *
- * @since 1.0.0
- * @access public
- */
+// Adds a custom meta box for product subtitle on the product edit screen.
 function custom_add_product_meta_box() {
 	add_meta_box(
 		'product_subtitle',           // ID
@@ -485,17 +428,7 @@ function custom_add_product_meta_box() {
 }
 add_action( 'add_meta_boxes', 'custom_add_product_meta_box' );
 
-/**
- * Callback function for rendering the product subtitle meta box.
- *
- * This function displays a textarea input for entering a product subtitle
- * in the WordPress admin panel when editing a product. It retrieves any
- * existing subtitle and populates the textarea with its current value.
- *
- * @param WP_Post $post The current post object being edited.
- * @since 1.0.0
- * @access public
- */
+// Callback function for rendering the product subtitle meta box.
 function product_subtitle_callback( $post ) {
 	wp_nonce_field( 'product_subtitle_nonce_action', 'product_subtitle_nonce' );
 
@@ -509,17 +442,7 @@ function product_subtitle_callback( $post ) {
 	<?php
 }
 
-/**
- * Saves the product subtitle when a product post is saved.
- *
- * This function handles the saving of a product subtitle to post meta when a product
- * is created or updated in the WordPress admin panel. It includes security checks
- * for nonce verification, autosave prevention, and user capabilities.
- *
- * @param int $post_id The ID of the post being saved.
- * @since 1.0.0
- * @access public
- */
+// Saves the product subtitle when a product post is saved.
 function save_product_subtitle( $post_id ) {
 	if ( ! isset( $_POST['product_subtitle_nonce'] ) ||
 		! wp_verify_nonce( $_POST['product_subtitle_nonce'], 'product_subtitle_nonce_action' ) ) {
@@ -537,15 +460,7 @@ function save_product_subtitle( $post_id ) {
 }
 add_action( 'save_post_product', 'save_product_subtitle' );
 
-/**
- * Displays the subtitle for a product in the WooCommerce shop loop.
- *
- * Retrieves the product subtitle from post meta, with a default fallback text.
- * Outputs the subtitle as an H4 element with a title attribute for additional context.
- *
- * @since 1.0.0
- * @access public
- */
+// Displays the subtitle for a product in the WooCommerce shop loop.
 function display_product_subtitle() {
 	global $post;
 
@@ -556,3 +471,84 @@ function display_product_subtitle() {
 	echo '<h4 class="product_subtitle" title="' . esc_attr( $product_subtitle ) . '">' . esc_html( $product_subtitle ) . '</h4>';
 }
 add_action( 'woocommerce_shop_loop_item_title', 'display_product_subtitle', 20 );
+
+// Handles sending an SMS with store location to a provided phone number.
+function send_store_location_sms() {
+	if ( ! isset( $_POST['phone'] ) ) {
+		wp_send_json_error( 'Phone number is required.' );
+	}
+
+	$phone = sanitize_text_field( $_POST['phone'] );
+
+	if ( ! preg_match( '/^[0-9]{10,15}$/', $phone ) ) {
+		wp_send_json_error( 'Invalid phone number.' );
+	}
+
+	// Define SMS data
+	$to   = [ $phone ]; // Should be an array
+	$msg  = 'Thank you for visiting! Here is our store location: https://goo.gl/maps/YOUR_STORE_LOCATION';
+	$urls = array(); // Not used by all gateways, but here for SMS Gateway Hub compatibility
+
+	// Use WP SMS plugin function
+	$sms_sent = wp_sms_send( $to, $msg, false, null, $urls );
+
+	if ( $sms_sent ) {
+		wp_send_json_success( 'SMS sent successfully.' );
+	} else {
+		wp_send_json_error( 'Failed to send SMS. Please try again.' );
+	}
+}
+add_action( 'wp_ajax_send_store_location_sms', 'send_store_location_sms' );
+add_action( 'wp_ajax_nopriv_send_store_location_sms', 'send_store_location_sms' );
+
+// Remove default WooCommerce add to cart button and product data tabs from single product pages
+remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
+remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs', 10 );
+
+// Register the "Health Benefits" metabox
+function add_health_benefits_metabox() {
+	add_meta_box(
+		'product_health_benefits',
+		__( 'Health Benefits', 'your-textdomain' ),
+		'render_health_benefits_metabox',
+		'product',
+		'normal',
+		'high'
+	);
+}
+add_action( 'add_meta_boxes', 'add_health_benefits_metabox' );
+
+// Render the metabox content with TinyMCE
+function render_health_benefits_metabox( $post ) {
+	$value = get_post_meta( $post->ID, '_health_benefits', true );
+
+	// Output the WordPress editor
+	wp_editor(
+		wp_kses_post( $value ),
+		'health_benefits_editor',
+		array(
+			'textarea_name' => 'health_benefits',
+			'media_buttons' => true,
+			'teeny'         => false,
+			'textarea_rows' => 8,
+		)
+	);
+}
+
+// Saves health benefits metadata for a product.
+function save_health_benefits_meta( $post_id ) {
+	if (
+		( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ||
+		! current_user_can( 'edit_post', $post_id ) ||
+		! isset( $_POST['health_benefits'] )
+	) {
+		return;
+	}
+
+	update_post_meta(
+		$post_id,
+		'_health_benefits',
+		wp_kses_post( $_POST['health_benefits'] )
+	);
+}
+add_action( 'save_post_product', 'save_health_benefits_meta' );

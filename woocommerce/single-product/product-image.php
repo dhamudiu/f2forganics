@@ -15,46 +15,48 @@
  * @version 9.7.0
  */
 
-use Automattic\WooCommerce\Enums\ProductType;
-
 defined( 'ABSPATH' ) || exit;
 
-// Note: `wc_get_gallery_image_html` was added in WC 3.3.2 and did not exist prior. This check protects against theme overrides being used on older versions of WC.
-if ( ! function_exists( 'wc_get_gallery_image_html' ) ) {
+if ( ! function_exists( 'wp_get_attachment_image' ) ) {
 	return;
 }
 
 global $product;
 
-$columns           = apply_filters( 'woocommerce_product_thumbnails_columns', 4 );
-$post_thumbnail_id = $product->get_image_id();
-$wrapper_classes   = apply_filters(
-	'woocommerce_single_product_image_gallery_classes',
-	array(
-		'woocommerce-product-gallery',
-		'woocommerce-product-gallery--' . ( $post_thumbnail_id ? 'with-images' : 'without-images' ),
-		'woocommerce-product-gallery--columns-' . absint( $columns ),
-		'images',
-	)
-);
+$attachment_ids = $product->get_gallery_image_ids();
+$main_image_id  = $product->get_image_id();
 ?>
-<div class="<?php echo esc_attr( implode( ' ', array_map( 'sanitize_html_class', $wrapper_classes ) ) ); ?>" data-columns="<?php echo esc_attr( $columns ); ?>" style="opacity: 0; transition: opacity .25s ease-in-out;">
-	<div class="woocommerce-product-gallery__wrapper">
-		<?php
-		if ( $post_thumbnail_id ) {
-			$html = wc_get_gallery_image_html( $post_thumbnail_id, true );
-		} else {
-			$wrapper_classname = $product->is_type( ProductType::VARIABLE ) && ! empty( $product->get_available_variations( 'image' ) ) ?
-				'woocommerce-product-gallery__image woocommerce-product-gallery__image--placeholder' :
-				'woocommerce-product-gallery__image--placeholder';
-			$html              = sprintf( '<div class="%s">', esc_attr( $wrapper_classname ) );
-			$html             .= sprintf( '<img src="%s" alt="%s" class="wp-post-image" />', esc_url( wc_placeholder_img_src( 'woocommerce_single' ) ), esc_html__( 'Awaiting product image', 'woocommerce' ) );
-			$html             .= '</div>';
-		}
 
-		echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', $html, $post_thumbnail_id ); // phpcs:disable WordPress.XSS.EscapeOutput.OutputNotEscaped
+<div class="custom-gallery-wrapper">
+	<div class="gallery-thumbnails">
+		<div class="swiper swiper-thumbs">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide thumb-item"
+					data-large="<?php echo esc_url( wp_get_attachment_image_url( $main_image_id, 'full' ) ); ?>">
+					<?php echo wp_get_attachment_image( $main_image_id, 'thumbnail' ); ?>
+				</div>
 
-		do_action( 'woocommerce_product_thumbnails' );
-		?>
+				<?php foreach ( $attachment_ids as $image_id ) : ?>
+					<div class="swiper-slide thumb-item"
+						data-large="<?php echo esc_url( wp_get_attachment_image_url( $image_id, 'full' ) ); ?>">
+						<?php echo wp_get_attachment_image( $image_id, 'thumbnail' ); ?>
+					</div>
+				<?php endforeach; ?>
+			</div>
+
+			<!-- Navigation buttons -->
+			<div class="swiper-button-prev swiper-button-prev-thumb"></div>
+			<div class="swiper-button-next swiper-button-next-thumb"></div>
+		</div>
+	</div>
+
+	<div class="main-image-container">
+		<div class="main-image">
+			<img id="main-product-image" src="<?php echo esc_url( wp_get_attachment_url( $main_image_id ) ); ?>" alt="" />
+		</div>
+
+		<div class="zoom-frame">
+			<img id="zoomed-image" src="<?php echo esc_url( wp_get_attachment_url( $main_image_id ) ); ?>" alt="" />
+		</div>
 	</div>
 </div>
